@@ -7,6 +7,18 @@ class SplashScrean extends StatelessWidget {
 
      @override
      Widget build(BuildContext context) {
-       return Scaffold();
+       return Scaffold(
+         body: Center(
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               Image.asset("assets/images/Animation - 1751837012840.gif"),
+               SizedBox(height:20),
+               Text("Taskati",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),)
+
+             ],
+           ),
+         ) ,
+       );
      }
    }

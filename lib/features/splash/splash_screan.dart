@@ -15,9 +15,8 @@ class _SplashScreanState extends State<SplashScrean> {
    @override
    void initState() {
     super.initState();
-     Future.delayed(Duration(seconds: 5),(){Navigator.push(
-       context,
-       MaterialPageRoute(builder: (context) => HomeScrean()),);});
+     Future.delayed(Duration(seconds: 5),(){Navigator.pushAndRemoveUntil(context,
+       MaterialPageRoute(builder: (context) => HomeScrean()),(R)=>false);});
   }
      @override
      Widget build(BuildContext context) {

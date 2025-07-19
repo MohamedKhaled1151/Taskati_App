@@ -14,9 +14,9 @@ class SplashScrean extends StatefulWidget {
 class _SplashScreanState extends State<SplashScrean> {
    @override
    void initState() {
-    super.initState();
+   super.initState();
      Future.delayed(Duration(seconds: 5),(){Navigator.pushAndRemoveUntil(context,
-       MaterialPageRoute(builder: (context) => HomeScrean()),(R)=>false);});
+     MaterialPageRoute(builder: (context) => HomeScrean()),(R)=>false);});
   }
      @override
      Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class _SplashScreanState extends State<SplashScrean> {
              SizedBox(height:5.h ,),
              Text("Taskati",
                style: TextStyle(
-                 fontSize: 18.sp,
-                 fontWeight: FontWeight.bold,
-                 color: Colors.black),),
+               fontSize: 18.sp,
+               fontWeight: FontWeight.bold,
+               color: Colors.black),),
              SizedBox(height: 5.h,),
              Text("Get organized and stay productive with Taskati",
              style: TextStyle(
@@ -38,11 +38,9 @@ class _SplashScreanState extends State<SplashScrean> {
                fontWeight: FontWeight.w600,
                fontSize: 13.sp
              ),)
-
            ],
          ),
        )
-
        );
      }
 }

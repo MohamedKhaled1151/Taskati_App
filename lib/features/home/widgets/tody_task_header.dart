@@ -2,7 +2,9 @@
 
  import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taskati/thems/app_colors.dart';
+import 'package:taskati/features/add_task/add_task.dart';
+
+import '../../../core/thems/app_colors.dart';
 
 class TodyTaskHeader extends StatelessWidget {
    const TodyTaskHeader({super.key});
@@ -16,24 +18,29 @@ class TodyTaskHeader extends StatelessWidget {
            fontSize:20,
            fontWeight: FontWeight.bold
             ) ,),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal:10.w,vertical: 11.h ),
-            decoration: BoxDecoration(
-             color: AppColors.mianColors,
-              borderRadius:BorderRadius.circular(12.r)
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>AddTask()));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal:10.w,vertical: 11.h ),
+              decoration: BoxDecoration(
+               color: AppColors.mianColors,
+                borderRadius:BorderRadius.circular(12.r)
 
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.add,color: Colors.white,),
-                Text("Add Task",style:
-                TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize:15.sp,
-                color: Colors.white
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.add,color: Colors.white,),
+                  Text("Add Task",style:
+                  TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize:15.sp,
+                  color: Colors.white
 
-                ),)
-              ],
+                  ),)
+                ],
+              ),
             ),
           )
         ],

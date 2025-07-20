@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../thems/app_colors.dart';
+import '../../../core/thems/app_colors.dart';
 
 class TaskItem extends StatelessWidget {
   const TaskItem({super.key});

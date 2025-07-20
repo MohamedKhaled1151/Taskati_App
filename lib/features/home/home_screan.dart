@@ -6,7 +6,6 @@ import 'package:taskati/features/home/widgets/home_app_bar.dart';
 import 'package:taskati/features/home/widgets/task_Item.dart';
 import 'package:taskati/features/home/widgets/task_filter_date.dart';
 import 'package:taskati/features/home/widgets/tody_task_header.dart';
-import 'package:taskati/thems/app_colors.dart';
 
 class  HomeScrean extends StatefulWidget {
   const HomeScrean ({super.key});

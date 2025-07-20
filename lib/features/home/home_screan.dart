@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taskati/features/home/widgets/home_app_bar.dart';
+import 'package:taskati/features/home/widgets/task_Item.dart';
 import 'package:taskati/features/home/widgets/task_filter_date.dart';
 import 'package:taskati/features/home/widgets/tody_task_header.dart';
 import 'package:taskati/thems/app_colors.dart';
@@ -30,7 +31,8 @@ class _State extends State< HomeScrean> {
               TodyTaskHeader(),
               SizedBox(height: 10.h,),
               TaskFilterDate(),
-
+              SizedBox(height: 10.h,),
+              TaskItem()
             ],
              ),
           )),

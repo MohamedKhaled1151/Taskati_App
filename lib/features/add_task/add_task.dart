@@ -3,28 +3,35 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taskati/core/thems/app_colors.dart';
 import 'package:taskati/features/add_task/widgets/select_color.dart';
-import 'package:taskati/features/add_task/widgets/text_form_filed_with_titlt.dart';
+import 'package:taskati/features/add_task/widgets/text_form_filed_with_title.dart';
 
 class AddTask extends StatelessWidget {
-  const AddTask({super.key});
+   AddTask({super.key});
+   var  validationKey=GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(left: 20.w,right: 20.w,bottom:30.h ),
-        height: 50.h,
-        decoration: BoxDecoration(
-          color: AppColors.mianColors,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Text("Create Task",style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18.sp,
-          color: Colors.white,
-        ),),
-      ) ,
+      bottomNavigationBar:Padding(
+        padding:EdgeInsets.only(left:20.w,right: 20.w ,bottom: 30.h),
+         child: ElevatedButton(
+           style: ElevatedButton.styleFrom(
+             backgroundColor: AppColors.mianColors,
+             shape: RoundedRectangleBorder(
+               borderRadius: BorderRadius.circular(12.r)
+             )
+           ) ,
+           onPressed: (){
+             validationKey.currentState?.validate();
+           }, child: Padding(
+          padding:const EdgeInsets.all(8),
+          child: Text("Create Task",style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),),
+        )),
+      ),
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.mianColors,
@@ -44,44 +51,67 @@ class AddTask extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-            child: Column(spacing:14.h,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormFiledWithTitlt(
-                  title: "Title",
-                  hintText: "Enter title",
-                ),
-                TextFormFiledWithTitlt(
-                  title: "Description",
-                  hintText: "Enter description",
-                  maxLine: 5,
-                ),
-                TextFormFiledWithTitlt(
-                  title: "Date",
-                  hintText: "12-5-2020",
-                  suffixIcon: Icon(Icons.date_range),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormFiledWithTitlt(
-                        title: "Start Time",
-                        hintText: "09:08 PM",
-                        suffixIcon: Icon(Icons.access_time),
+            child: Form(
+              key: validationKey,
+              child: Column(
+                spacing:14.h,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormFiledWithTitle(
+                    title: "Title",
+                    hintText: "Enter title",
+                    validator: (value){
+                      if(value==null || value.isEmpty){
+                        return "Title is required ";
+                      }
+                    },
+                  ),
+                  TextFormFiledWithTitle(
+                    title: "Description",
+                    hintText: "Enter description",
+                    maxLine: 5,
+                    validator: (value){
+                      if(value==null || value.isEmpty){
+                        return "description is required ";
+                      }
+                    },
+                  ),
+                  TextFormFiledWithTitle(
+                    onTap: (){
+                      showDatePicker(context: context, firstDate: DateTime.now(), lastDate:DateTime(2030));
+                    },
+                    title: "Date",
+                    hintText: "12-5-2020",
+                    suffixIcon: Icon(Icons.date_range),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormFiledWithTitle(
+                          onTap: (){
+                            showTimePicker(context: context, initialTime:TimeOfDay.now());
+                          },
+                          title: "Start Time",
+                          hintText: "09:08 PM",
+                          suffixIcon: Icon(Icons.access_time),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10.w),
-                    Expanded(
-                      child: TextFormFiledWithTitlt(
-                        title: "End Time",
-                        hintText: "09:08 PM",
-                        suffixIcon: Icon(Icons.access_time),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: TextFormFiledWithTitle(
+                          onTap: (){
+                            showTimePicker(context: context, initialTime:TimeOfDay.now());
+                          },
+                          title: "End Time",
+                          hintText: "09:08 PM",
+                          suffixIcon: Icon(Icons.access_time),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SelectColor(),
-              ],
+                    ],
+                  ),
+                  SelectColor(),
+                ],
+              ),
             ),
           ),
         ),

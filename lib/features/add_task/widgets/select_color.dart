@@ -4,9 +4,25 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SelectColor extends StatelessWidget {
+class SelectColor extends StatefulWidget {
   final Color ?selectColor;
    const SelectColor({super.key,  this.selectColor});
+
+  @override
+  State<SelectColor> createState() => _SelectColorState();
+}
+
+class _SelectColorState extends State<SelectColor> {
+   List<Color> colors=[
+     Colors.black,
+     Colors.orange,
+     Colors.blue,
+     Colors.red,
+     Colors.deepPurple,
+     Colors.green
+   ];
+      int activeIndex=0;
+
 
    @override
    Widget build(BuildContext context) {
@@ -20,21 +36,41 @@ class SelectColor extends StatelessWidget {
          ),),
          SizedBox(height: 10.h,),
        SizedBox( height: 30.h,
-         child: ListView.separated
-         (   scrollDirection: Axis.horizontal,
-           itemCount:3,
+         child: ListView.separated( scrollDirection: Axis.horizontal,
+           itemCount:colors.length,
          itemBuilder:(context,index){
-         return CircleAvatar(
-           backgroundColor:Colors.black,
-           radius:20.r,
-           child: Icon(
-             Icons.check,
-             color:Colors.white,
-           ),
-         );}, separatorBuilder: (context,index)=>SizedBox(width: 5.w,),
-         ),
+         return ColorItem(
+        backgroundColor: colors[index],
+        isActive:index==activeIndex ,
+         onTap: (){
+            if(activeIndex!=index){
+              setState(() {
+                activeIndex=index;
+              });
+            }
+           },
+         );}, separatorBuilder: (context,index)=>SizedBox(width: 5.w,),),
        )
        ],
+     );
+   }
+}
+ class ColorItem extends StatelessWidget {
+   final Color? backgroundColor;
+   final bool isActive;
+   final void Function()? onTap;
+
+   const ColorItem({super.key, this.backgroundColor, this.isActive=false, this.onTap});
+
+   @override
+   Widget build(BuildContext context) {
+     return InkWell(
+       onTap:onTap ,
+       child: CircleAvatar(
+         backgroundColor:backgroundColor,
+         radius:20.r,
+         child: isActive? Icon(Icons.check, color:Colors.white,):null
+       ),
      );
    }
  }

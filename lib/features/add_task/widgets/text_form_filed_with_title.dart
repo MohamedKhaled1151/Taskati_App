@@ -3,12 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/thems/app_colors.dart';
 
-class TextFormFiledWithTitlt extends StatelessWidget {
+class TextFormFiledWithTitle extends StatelessWidget {
   final String title;
   final String hintText;
   final int maxLine ;
   final Icon?suffixIcon;
-  const TextFormFiledWithTitlt({super.key, required this.title, required this.hintText,  this.maxLine=1, this.suffixIcon});
+  final void Function()? onTap;
+   final String? Function(String?)? validator;
+  const TextFormFiledWithTitle({super.key,
+    required this.title,
+    required this.hintText,
+    this.maxLine=1,
+    this.suffixIcon,
+    this.validator, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,25 +28,28 @@ class TextFormFiledWithTitlt extends StatelessWidget {
         ),),
         SizedBox(height: 10.h,),
         TextFormField(
+          onTap: onTap,
+          readOnly: onTap!=null,
           decoration: InputDecoration(
             suffixIcon:suffixIcon,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12.r),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-              borderRadius: BorderRadius.circular(12.r),
+            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(12.r),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.mianColors, width: 2),
-              borderRadius: BorderRadius.circular(12.r),
+            borderSide: BorderSide(color: AppColors.mianColors, width: 2),
+            borderRadius: BorderRadius.circular(12.r),
             ),
             hintText: hintText,
             hintStyle: TextStyle(
-              fontSize: 20.sp,
+            fontSize: 20.sp,
             ),
           ),
           maxLines: maxLine,
+          validator:validator,
 
         ),
       ],

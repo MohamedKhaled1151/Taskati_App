@@ -4,12 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taskati/core/thems/app_colors.dart';
 import 'package:taskati/features/add_task/widgets/select_color.dart';
 import 'package:taskati/features/add_task/widgets/text_form_filed_with_title.dart';
+import 'package:taskati/features/home/models/taskmodel.dart';
 
 class AddTask extends StatelessWidget {
    AddTask({super.key});
    var  validationKey=GlobalKey<FormState>();
+  var titleController=TextEditingController();
+  var descriptionController=TextEditingController();
+   TimeOfDay ? startTime;
+   TimeOfDay ? endTime;
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar:Padding(
@@ -22,7 +27,16 @@ class AddTask extends StatelessWidget {
              )
            ) ,
            onPressed: (){
-             validationKey.currentState?.validate();
+            if ( validationKey.currentState?.validate()??false)
+            {
+              TaskModel.tasks.add(TaskModel(
+                title: titleController.text,
+                startTime:"${startTime?.hour } : ${startTime?.minute}",
+                endTime: "${endTime?.hour } : ${endTime?.minute}",
+                status: "To do ",
+                des: descriptionController.text,
+                taskColors: AppColors.mianColors));
+            }
            }, child: Padding(
           padding:const EdgeInsets.all(8),
           child: Text("Create Task",style: TextStyle(
@@ -58,6 +72,7 @@ class AddTask extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormFiledWithTitle(
+                    controller:titleController ,
                     title: "Title",
                     hintText: "Enter title",
                     validator: (value){
@@ -67,6 +82,7 @@ class AddTask extends StatelessWidget {
                     },
                   ),
                   TextFormFiledWithTitle(
+                    controller: descriptionController,
                     title: "Description",
                     hintText: "Enter description",
                     maxLine: 5,
@@ -89,7 +105,9 @@ class AddTask extends StatelessWidget {
                       Expanded(
                         child: TextFormFiledWithTitle(
                           onTap: (){
-                            showTimePicker(context: context, initialTime:TimeOfDay.now());
+                            showTimePicker(context: context, initialTime:TimeOfDay.now()).then((v){
+                               startTime=v;
+                            });
                           },
                           title: "Start Time",
                           hintText: "09:08 PM",
@@ -100,7 +118,9 @@ class AddTask extends StatelessWidget {
                       Expanded(
                         child: TextFormFiledWithTitle(
                           onTap: (){
-                            showTimePicker(context: context, initialTime:TimeOfDay.now());
+                            showTimePicker(context: context, initialTime:TimeOfDay.now()).then((v){
+                              endTime=v;
+                            });
                           },
                           title: "End Time",
                           hintText: "09:08 PM",

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:taskati/features/profile/profile_screan.dart';
 
 import '../../../core/thems/app_colors.dart';
 
@@ -28,11 +29,16 @@ class HomeAppBar extends StatelessWidget {
             ),),
           ],
         ),
-        CircleAvatar(
-          radius:35.r,
-          backgroundImage:
-          AssetImage("assets/images/IMG-20250501-WA0001.jpg"),
+        InkWell(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScrean()));
+          },
+          child: CircleAvatar(
+            radius:35.r,
+            backgroundImage:
+            AssetImage("assets/images/IMG-20250501-WA0001.jpg"),
 
+          ),
         )
       ],
     );

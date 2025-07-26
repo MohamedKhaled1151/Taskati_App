@@ -19,7 +19,8 @@ class _SelectColorState extends State<SelectColor> {
      Colors.blue,
      Colors.red,
      Colors.deepPurple,
-     Colors.green
+     Colors.green,
+     Colors.grey
    ];
       int activeIndex=0;
 

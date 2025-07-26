@@ -8,6 +8,7 @@ class TextFormFiledWithTitle extends StatelessWidget {
   final String hintText;
   final int maxLine ;
   final Icon?suffixIcon;
+  final TextEditingController? controller;
   final void Function()? onTap;
    final String? Function(String?)? validator;
   const TextFormFiledWithTitle({super.key,
@@ -15,7 +16,8 @@ class TextFormFiledWithTitle extends StatelessWidget {
     required this.hintText,
     this.maxLine=1,
     this.suffixIcon,
-    this.validator, this.onTap});
+    this.validator, this.onTap,
+    this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class TextFormFiledWithTitle extends StatelessWidget {
         ),),
         SizedBox(height: 10.h,),
         TextFormField(
+          controller: controller ,
           onTap: onTap,
           readOnly: onTap!=null,
           decoration: InputDecoration(

@@ -2,13 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taskati/features/home/models/taskmodel.dart';
+import 'package:taskati/features/home/models/task_model.dart';
 
 import '../../../core/thems/app_colors.dart';
 
-class TaskItem extends StatelessWidget {
+class TaskItem extends StatefulWidget {
   const TaskItem({super.key, });
 
+  @override
+  State<TaskItem> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<TaskItem> {
   @override
   Widget build(BuildContext context) {
     return TaskModel.tasks.isEmpty?
@@ -29,8 +34,40 @@ class TaskItem extends StatelessWidget {
           itemBuilder:(context,index){
             return Dismissible(
               key: UniqueKey(),
+                confirmDismiss: (direction)async{
+                  if (direction==DismissDirection.startToEnd){
+                    setState(() {
+                      TaskModel.tasks[index].status="Complete";
+
+                    });
+                  }
+                  else{
+                    setState(() {
+                      TaskModel.tasks.remove(TaskModel.tasks[index]);
+                    });
+                  }
+                },
+                background:Container(
+                  alignment: Alignment.centerLeft,
+                  color: Colors.green,
+                  child: Text("Complete",style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black
+                  ),),
+                ) ,
+                secondaryBackground: Container(
+                  alignment: Alignment.centerRight,
+                  color: Colors.red,
+                  child: Text("Remove",style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black
+                  ),),
+                ) ,
                 child: Item(taskModel: TaskModel.tasks[index],
-                  
+
+
                 ));
           } ),
     );

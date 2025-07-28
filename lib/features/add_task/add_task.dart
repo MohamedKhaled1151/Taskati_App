@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taskati/core/thems/app_colors.dart';
 import 'package:taskati/features/add_task/widgets/select_color.dart';
 import 'package:taskati/features/add_task/widgets/text_form_filed_with_title.dart';
-import 'package:taskati/features/home/models/taskmodel.dart';
+import 'package:taskati/features/home/models/task_model.dart';
 
 class AddTask extends StatelessWidget {
    AddTask({super.key});
@@ -13,6 +13,7 @@ class AddTask extends StatelessWidget {
   var descriptionController=TextEditingController();
    TimeOfDay ? startTime;
    TimeOfDay ? endTime;
+   Color ? taskColor;
 
    @override
   Widget build(BuildContext context) {
@@ -29,13 +30,14 @@ class AddTask extends StatelessWidget {
            onPressed: (){
             if ( validationKey.currentState?.validate()??false)
             {
-              TaskModel.tasks.add(TaskModel(
+              TaskModel.tasks.insert(0,TaskModel(
                 title: titleController.text,
-                startTime:"${startTime?.hour } : ${startTime?.minute}",
-                endTime: "${endTime?.hour } : ${endTime?.minute}",
+                startTime:TaskModel.timeFormat(context, startTime??TimeOfDay.now()),
+                endTime: TaskModel.timeFormat(context, endTime??TimeOfDay.now()),
                 status: "To do ",
                 des: descriptionController.text,
-                taskColors: AppColors.mianColors));
+                taskColors: taskColor??AppColors.mianColors));
+              Navigator.pop(context);
             }
            }, child: Padding(
           padding:const EdgeInsets.all(8),
@@ -129,7 +131,11 @@ class AddTask extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SelectColor(),
+                  SelectColor(
+                    onChange:(c){
+                    taskColor=c;
+                    }  ,
+                  ),
                 ],
               ),
             ),

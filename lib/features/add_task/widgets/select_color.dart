@@ -5,8 +5,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectColor extends StatefulWidget {
-  final Color ?selectColor;
-   const SelectColor({super.key,  this.selectColor});
+  final Function(Color) onChange ;
+   const SelectColor({super.key, required this.onChange,  });
 
   @override
   State<SelectColor> createState() => _SelectColorState();
@@ -47,6 +47,7 @@ class _SelectColorState extends State<SelectColor> {
             if(activeIndex!=index){
               setState(() {
                 activeIndex=index;
+                widget.onChange(colors[activeIndex]);
               });
             }
            },

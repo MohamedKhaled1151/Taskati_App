@@ -7,8 +7,10 @@ import 'package:taskati/features/add_task/add_task.dart';
 import '../../../core/thems/app_colors.dart';
 
 class TodyTaskHeader extends StatelessWidget {
-   const TodyTaskHeader({super.key});
- 
+  final void Function()? onTap;
+
+  const TodyTaskHeader({super.key, this.onTap});
+
    @override
    Widget build(BuildContext context) {
      return Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -19,9 +21,7 @@ class TodyTaskHeader extends StatelessWidget {
            fontWeight: FontWeight.bold
             ) ,),
           InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>AddTask()));
-            },
+            onTap: onTap,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal:10.w,vertical: 11.h ),
               decoration: BoxDecoration(
@@ -46,5 +46,5 @@ class TodyTaskHeader extends StatelessWidget {
         ],
      );
    }
- }
+}
  

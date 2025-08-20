@@ -6,9 +6,14 @@ import 'package:taskati/features/profile/profile_screan.dart';
 
 import '../../../core/thems/app_colors.dart';
 
-class HomeAppBar extends StatelessWidget {
+class HomeAppBar extends StatefulWidget {
   const HomeAppBar({super.key});
 
+  @override
+  State<HomeAppBar> createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,

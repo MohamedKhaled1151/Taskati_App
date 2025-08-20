@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taskati/features/home/models/task_model.dart';
 
-import '../../../core/thems/app_colors.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem({super.key, });

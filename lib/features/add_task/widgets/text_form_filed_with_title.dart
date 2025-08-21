@@ -6,54 +6,54 @@ import '../../../core/thems/app_colors.dart';
 class TextFormFiledWithTitle extends StatelessWidget {
   final String title;
   final String hintText;
-  final int maxLine ;
-  final Icon?suffixIcon;
+  final int maxLine;
+  final Icon? suffixIcon;
   final TextEditingController? controller;
   final void Function()? onTap;
-   final String? Function(String?)? validator;
-  const TextFormFiledWithTitle({super.key,
+  final String? Function(String?)? validator;
+  const TextFormFiledWithTitle({
+    super.key,
     required this.title,
     required this.hintText,
-    this.maxLine=1,
+    this.maxLine = 1,
     this.suffixIcon,
-    this.validator, this.onTap,
-    this.controller});
+    this.validator,
+    this.onTap,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18.sp,
-        ),),
-        SizedBox(height: 10.h,),
+        Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+        ),
+        SizedBox(height: 10.h),
         TextFormField(
-          controller: controller ,
+          controller: controller,
           onTap: onTap,
-          readOnly: onTap!=null,
+          readOnly: onTap != null,
           decoration: InputDecoration(
-            suffixIcon:suffixIcon,
+            suffixIcon: suffixIcon,
             border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.mianColors, width: 2),
-            borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.mianColors, width: 2),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             hintText: hintText,
-            hintStyle: TextStyle(
-            fontSize: 20.sp,
-            ),
+            hintStyle: TextStyle(fontSize: 20.sp),
           ),
           maxLines: maxLine,
-          validator:validator,
-
+          validator: validator,
         ),
       ],
     );

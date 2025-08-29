@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:taskati/features/home/widgets/home_app_bar.dart';
 import 'package:taskati/features/home/widgets/task_Item.dart';
 import 'package:taskati/features/home/widgets/task_filter_date.dart';
 import 'package:taskati/features/home/widgets/tody_task_header.dart';
 
+import '../../core/services/local/user_services.dart';
 import '../add_task/add_task.dart';
+import 'models/task_model.dart';
 
 class HomeScrean extends StatefulWidget {
   const HomeScrean({super.key});
@@ -15,6 +18,12 @@ class HomeScrean extends StatefulWidget {
 }
 
 class _State extends State<HomeScrean> {
+  @override
+  void initState() {
+    UserServices.getUSerData();
+    TaskModel.tasks=Hive.box<TaskModel>("Tasks").values.toList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -8,8 +8,14 @@ class TasksServices{
   static var tasksBox=Hive.box<TaskModel>(AppConstants.tasksBoxId);
 
 
-  static storeTask(TaskModel task){
-    tasksBox.add(task);
+  static bool storeTask(TaskModel task) {
+    try {
+      tasksBox.add(task);
+      getAllTasks();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static getAllTasks(){
@@ -23,6 +29,7 @@ class TasksServices{
   static updateTask(TaskModel task,int index){
     task.status="Complete";
     tasksBox.putAt(index, task);
+    getAllTasks();
 
   }
 }

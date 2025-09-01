@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:taskati/core/services/local/user_services.dart';
 import 'package:taskati/core/thems/app_colors.dart';
 import 'package:taskati/features/add_task/widgets/text_form_filed_with_title.dart';
+import 'package:taskati/features/profile/models/user_model.dart';
 import 'package:taskati/features/profile/widgets/custom_bottom.dart';
 
 class ProfileScrean extends StatefulWidget {
@@ -27,9 +29,10 @@ class _ProfileScreanState extends State<ProfileScrean> {
     image = await picker.pickImage(source: ImageSource.camera);
     setState(() {});
   }
-
+  var nameController=TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final user =UserServices.getUSerData();
     return Scaffold(
       appBar: AppBar(actions: [Icon(Icons.light_mode)]),
       body: Padding(
@@ -71,9 +74,11 @@ class _ProfileScreanState extends State<ProfileScrean> {
                 },
                 child: CircleAvatar(
                   radius: 60.r,
-                  backgroundImage: image == null ? const AssetImage("assets/images/IMG-20250501-WA0001.jpg")
-                  as ImageProvider
-                      : FileImage(File(image!.path)),
+                  backgroundImage:image != null
+                      ? FileImage(File(image!.path))
+                      : (user != null && user.image.isNotEmpty)
+                      ? FileImage(File(user.image))
+                      : null,
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Icon(
@@ -104,12 +109,20 @@ class _ProfileScreanState extends State<ProfileScrean> {
                             child: Column(
                               children: [
                                 TextFormFiledWithTitle(
+                                  controller: nameController,
                                     title: "Name",
                                     hintText: "Please Enter your Name"),
                                 SizedBox(height: 10.h,),
                                 InkWell(
+                                  onTap: (){
+                                    setState(() {
+
+                                    });
+                                    Navigator.pop(context);
+                                  },
                                   child: CustomBottom(title: "change Name "),),
-                            
+
+
                               ],
                             ),
                           ),
@@ -120,8 +133,10 @@ class _ProfileScreanState extends State<ProfileScrean> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        " Name ",
+                      child: Text(nameController.text.isNotEmpty
+                          ? nameController.text
+                          : (user?.name ?? "No Name"),
+
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
                         style: TextStyle(
@@ -142,9 +157,23 @@ class _ProfileScreanState extends State<ProfileScrean> {
                         size: 30.r,
                       ),
                     ),
+
                   ],
+
                 ),
               ),
+              SizedBox(height: 10.h,),
+              InkWell(
+                onTap: (){
+                  UserServices.saveUser(UserModel(
+                      nameController.text.isNotEmpty
+                          ? nameController.text
+                          : (user?.name ?? ""),
+                      image?.path.toString() ?? (user?.image ?? ""),));
+                  Navigator.pop(context);
+                },
+                child: CustomBottom(title: "Create Profile "),),
+
             ],
           ),
         ),

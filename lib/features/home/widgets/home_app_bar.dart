@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:taskati/core/services/local/user_services.dart';
 import 'package:taskati/features/profile/profile_screan.dart';
 
 import '../../../core/thems/app_colors.dart';
@@ -14,6 +17,8 @@ class HomeAppBar extends StatefulWidget {
 class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
+    final user =UserServices.getUSerData();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -21,7 +26,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hello,Mohamed",
+               "Hello,${user?.name ?? " "} ",
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
@@ -43,15 +48,23 @@ class _HomeAppBarState extends State<HomeAppBar> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ProfileScrean()),
-            );
+            ).then((_){
+              setState(() {
+
+              });
+            });
           },
           child: CircleAvatar(
             radius: 35.r,
-            backgroundImage: AssetImage(
-              "assets/images/IMG-20250501-WA0001.jpg",
-            ),
+            backgroundImage: (user != null && user.image.isNotEmpty)
+                ? FileImage(File(user.image))
+                : null,
+            child: user == null || user.image.isEmpty
+                ? Icon(Icons.person, size: 30.r, color: Colors.white)
+                : null,
+    ),
           ),
-        ),
+
       ],
     );
   }

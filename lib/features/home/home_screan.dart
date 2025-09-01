@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:taskati/core/services/task_services.dart';
 import 'package:taskati/features/home/widgets/home_app_bar.dart';
 import 'package:taskati/features/home/widgets/task_Item.dart';
 import 'package:taskati/features/home/widgets/task_filter_date.dart';
@@ -8,6 +9,7 @@ import 'package:taskati/features/home/widgets/tody_task_header.dart';
 
 import '../../core/services/local/user_services.dart';
 import '../add_task/add_task.dart';
+import '../profile/models/user_model.dart';
 import 'models/task_model.dart';
 
 class HomeScrean extends StatefulWidget {
@@ -20,10 +22,15 @@ class HomeScrean extends StatefulWidget {
 class _State extends State<HomeScrean> {
   @override
   void initState() {
-    UserServices.getUSerData();
-    TaskModel.tasks=Hive.box<TaskModel>("Tasks").values.toList();
+
+    final user = UserServices.getUSerData();
+    if (user != null) {
+      debugPrint("User loaded: ${user.name}");
+    } else {
+      debugPrint("No user found yet.");
+      TasksServices.getAllTasks();
     super.initState();
-  }
+  }}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +43,16 @@ class _State extends State<HomeScrean> {
               SizedBox(height: 10.h),
               TodyTaskHeader(
                 onTap: () async {
-                  await Navigator.push(
+                 final result= await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AddTask()),
                   );
-                  setState(() {});
-                },
+                  if(result== true){
+                    setState(() {});
+                   TasksServices.getAllTasks();
+                  }
+                }
+
               ),
               SizedBox(height: 10.h),
               TaskFilterDate(),

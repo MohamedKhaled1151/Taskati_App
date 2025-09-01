@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:taskati/core/services/task_services.dart';
 import 'package:taskati/core/thems/app_colors.dart';
 import 'package:taskati/features/add_task/widgets/select_color.dart';
 import 'package:taskati/features/add_task/widgets/text_form_filed_with_title.dart';
@@ -15,7 +16,6 @@ class AddTask extends StatelessWidget {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
   Color? taskColor;
-  var tasksBox=Hive.box<TaskModel>("Tasks");
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class AddTask extends StatelessWidget {
           ),
           onPressed: () {
             if (validationKey.currentState?.validate() ?? false) {
-              TaskModel.tasks.insert(0,
+              final task=
                 TaskModel(
                   title: titleController.text,
                   startTime: TaskModel.timeFormat(
@@ -46,9 +46,16 @@ class AddTask extends StatelessWidget {
                   status: "To do ",
                   des: descriptionController.text,
                   taskColors: taskColor ?? AppColors.mianColors,
-                ),
-              );
-              Navigator.pop(context);
+                );
+
+              final isSaved = TasksServices.storeTask(task);
+              if (isSaved) {
+                Navigator.pop(context, true);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Failed to save task")),
+                );
+              }
             }
           },
           child: Padding(

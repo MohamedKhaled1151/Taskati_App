@@ -10,14 +10,16 @@ class UserServices{
 
   static var userBox=Hive.box<UserModel>(AppConstants.userBoxId);
 
+
   static saveUser(UserModel user){
-    userBox.put("user", user);
+    userBox.put('user',user);
   }
 
 
-  static UserModel getUSerData(){
 
-    return  userBox.get("user") as UserModel;
+  static UserModel ?getUSerData(){
+
+    return  userBox.get('user') ;
   }
 
 }
